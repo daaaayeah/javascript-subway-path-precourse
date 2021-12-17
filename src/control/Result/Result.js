@@ -3,11 +3,13 @@ import stations from '../../common/data.js';
 import getShortestPath from './Path.js';
 
 function getWeight(departure, arrival) {
-  let distance = 0;
-  let time = 0;
+  let [distance, time] = [0, 0];
 
   stations.forEach((station) => {
-    if (station.departure === departure && station.arrival === arrival) {
+    if (
+      (station.departure === departure && station.arrival === arrival) ||
+      (station.arrival === departure && station.departure === arrival)
+    ) {
       distance = station.distance;
       time = station.time;
     }

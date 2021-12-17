@@ -6,32 +6,30 @@ function showAlert(message) {
   alert(message);
 }
 
-function getDepartures() {
-  const departures = [];
+function getAllStations() {
+  const allStations = [];
 
-  stations.forEach((station) => departures.push(station.departure));
+  stations.forEach((station) => {
+    if (!allStations.includes(station.departure)) {
+      allStations.push(station.departure);
+    } else if (!allStations.includes(station.arrival)) {
+      allStations.push(station.arrival);
+    }
+  });
 
-  return departures;
-}
-
-function getArrivals() {
-  const arrivals = [];
-
-  stations.forEach((station) => arrivals.push(station.arrival));
-
-  return arrivals;
+  return allStations;
 }
 
 function checkArrivalValidation() {
   const departure = $('departure-station-name-input').value;
   const arrival = $('arrival-station-name-input').value;
-  const arrivals = getArrivals();
+  const allStations = getAllStations();
 
   if (!arrival) {
     showAlert(MESSAGE.NULL_ARRIVAL);
   } else if (arrival.length < STATION.MIN_LENGTH) {
     showAlert(MESSAGE.LEAST_ARRIVAL);
-  } else if (!arrivals.includes(arrival)) {
+  } else if (!allStations.includes(arrival)) {
     showAlert(MESSAGE.NON_EXIST_ARRIVAL);
   } else if (departure === arrival) {
     showAlert(MESSAGE.DUPLICATE);
@@ -40,13 +38,13 @@ function checkArrivalValidation() {
 
 export function checkDepartureValidation() {
   const departure = $('departure-station-name-input').value;
-  const departures = getDepartures();
+  const allStations = getAllStations();
 
   if (!departure) {
     showAlert(MESSAGE.NULL_DEPARTURE);
   } else if (departure.length < STATION.MIN_LENGTH) {
     showAlert(MESSAGE.LEAST_DEPARTURE);
-  } else if (!departures.includes(departure)) {
+  } else if (!allStations.includes(departure)) {
     showAlert(MESSAGE.NON_EXIST_DEPARTURE);
   } else {
     checkArrivalValidation();
@@ -55,24 +53,24 @@ export function checkDepartureValidation() {
 
 export function getDepartureValidation() {
   const departure = $('departure-station-name-input').value;
-  const departures = getDepartures();
+  const allStations = getAllStations();
 
   return (
     departure &&
     departure.length >= STATION.MIN_LENGTH &&
-    departures.includes(departure)
+    allStations.includes(departure)
   );
 }
 
 export function getArrivalValidation() {
   const departure = $('departure-station-name-input').value;
   const arrival = $('arrival-station-name-input').value;
-  const arrivals = getArrivals();
+  const allStations = getAllStations();
 
   return (
     arrival &&
     arrival.length >= STATION.MIN_LENGTH &&
-    arrivals.includes(arrival) &&
-    arrivals !== departure
+    allStations.includes(arrival) &&
+    arrival !== departure
   );
 }
