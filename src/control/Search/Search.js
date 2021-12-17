@@ -1,4 +1,5 @@
 import { $ } from '../../common/element.js';
+import createResult from '../../view/Result/Result.js';
 import { calculateResultWeight, getResultPath } from '../Result/Result.js';
 
 function onSearchClick(event) {
@@ -7,7 +8,7 @@ function onSearchClick(event) {
   const arrival = $('arrival-station-name-input').value;
   const path = getResultPath(departure, arrival);
   const [distance, time] = calculateResultWeight(departure, arrival);
-  console.log(path, distance, time);
+  createResult(distance, time, path);
 }
 
 export default function search() {
