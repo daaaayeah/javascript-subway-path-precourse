@@ -12,3 +12,16 @@ export function createHeader(level, textContent) {
 export function createDiv() {
   return document.createElement('div');
 }
+
+export function getStandard() {
+  const radioButtons = document.getElementsByName('search-type');
+  let standard = '';
+
+  radioButtons.forEach((button) => {
+    if (button.checked) {
+      standard = button.value;
+    }
+  });
+
+  return standard;
+}

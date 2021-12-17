@@ -1,25 +1,12 @@
 import { DISTANCE, HEADER, TIME } from '../../common/constant.js';
-import { $, createDiv, createHeader } from '../../common/element.js';
+import * as elem from '../../common/element.js';
 
 function createResultHeader() {
-  return createHeader('h2', HEADER.RESULT);
-}
-
-function getStandard() {
-  const radioButtons = document.getElementsByName('search-type');
-  let standard = '';
-
-  radioButtons.forEach((button) => {
-    if (button.checked) {
-      standard = button.value;
-    }
-  });
-
-  return standard;
+  return elem.createHeader('h2', HEADER.RESULT);
 }
 
 function createStandardHeader() {
-  return createHeader('h3', getStandard());
+  return elem.createHeader('h3', elem.getStandard());
 }
 
 function createResultTableHeader() {
@@ -58,22 +45,22 @@ function createResultTable(distance, time, path) {
 }
 
 function removeResult() {
-  if ($('result-div')) {
-    $('result-div').remove();
+  if (elem.$('result-div')) {
+    elem.$('result-div').remove();
   }
 }
 
 export default function createResult(distance, time, path) {
   removeResult();
 
-  const result = createDiv();
+  const result = elem.createDiv();
   result.setAttribute('id', 'result-div');
   const resultHeader = createResultHeader();
   const standardHeader = createStandardHeader();
   result.append(resultHeader, standardHeader);
   const resultTable = createResultTable(distance, time, path);
   result.append(resultTable);
-  $('app').append(result);
+  elem.$('app').append(result);
 
   return result;
 }
