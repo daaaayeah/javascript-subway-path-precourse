@@ -23,3 +23,5 @@ export const TIME = {
 export const BUTTON = {
   SEARCH: '길 찾기',
 };
+
+export const PATH = '->';
